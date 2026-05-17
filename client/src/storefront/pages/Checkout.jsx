@@ -91,6 +91,21 @@ export default function Checkout() {
   const set = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
 
   useEffect(() => {
+    if (typeof window === 'undefined' || !window.fbq) return;
+    if (!items || items.length === 0) return;
+    const contentIds = items.map((i) => String(i.productId));
+    const numItems = items.reduce((sum, i) => sum + Number(i.quantity || 0), 0);
+    window.fbq('track', 'InitiateCheckout', {
+      content_type: 'product',
+      content_ids: contentIds,
+      currency: 'DZD',
+      value: Number(subtotal || 0),
+      num_items: numItems,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     let active = true;
     fetchWilayas()
       .then((data) => {

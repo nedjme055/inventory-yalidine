@@ -17,7 +17,7 @@ import { CartProvider } from './storefront/cart-context';
 import AdminGuard from './admin/AdminGuard';
 import AdminLogin from './admin/AdminLogin';
 
-const META_PIXEL_ID = '4332650283655718';
+const META_PIXEL_ID = '2159470911562696';
 
 function MetaPixelTracker() {
   const location = useLocation();

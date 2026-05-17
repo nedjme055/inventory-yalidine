@@ -148,6 +148,17 @@ export default function Product() {
     setActiveImageIndex(0);
   }, [selectedColor]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.fbq || !product) return;
+    window.fbq('track', 'ViewContent', {
+      content_type: 'product',
+      content_ids: [String(product.id)],
+      content_name: product.model_name,
+      currency: 'DZD',
+      value: Number(getEffectivePrice(product) || 0),
+    });
+  }, [product]);
+
   const displayImage = currentColorImages[activeImageIndex] || selectedColorImage || product?.image;
 
   const swipableColors = useMemo(() => {
@@ -414,6 +425,16 @@ export default function Product() {
       color: selectedVariant.color,
       quantity,
     });
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'AddToCart', {
+        content_type: 'product',
+        content_ids: [String(product.id)],
+        content_name: product.model_name,
+        currency: 'DZD',
+        value: Number(effectivePrice || 0) * Number(quantity || 1),
+        num_items: Number(quantity || 1),
+      });
+    }
     navigate('/cart');
   };
 
