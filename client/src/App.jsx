@@ -96,7 +96,7 @@ function App() {
             <Route path="analytics" element={<Analytics />} />
             <Route path="reviews" element={<Reviews />} />
           </Route>
-        </Routes>
+        </Routes> */ded/*
       </CartProvider>
     </BrowserRouter>
   );
